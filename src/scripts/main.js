@@ -1,5 +1,5 @@
 $(function() {
-  console.log('this is a test');
+  console.log('this is a test b');
   const model = new CotModel({});
 
   const formDef = {
