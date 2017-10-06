@@ -6,6 +6,6 @@
   ],
   "private": true,
   "dependencies": {
-    "core": "https://github.com/CityofToronto/corejs.git#5.0.1"
+    "core": "https://github.com/CityofToronto/corejs.git#feature/grid_backbone_model"
   }
 }

@@ -1,57 +1,109 @@
-// The main javascript file for testgridbackbonemodel.
-// IMPORTANT:
-// Any resources from this project should be referenced using SRC_PATH preprocessor var
-// Ex: let myImage = '/*@echo SRC_PATH*//img/sample.jpg';
+$(function() {
+  console.log('this is a test');
+  const model = new CotModel({});
 
-$(function () {
-  //Core uses https://www.npmjs.com/package/gulp-preprocess to allow for preprocessing:
-  // @if ENV='local' || ENV='dev'
-  console.log('running on env: ', '/* @echo ENV*/');
-  // @endif
+  const formDef = {
+    id: 'testgridbackbonemodel_cot_form',
+    title: 'Test Grid Backbone Model',
+    rootPath: '/*@echo SRC_PATH*//', //only required for forms using validationtype=Phone fields
+    success: (e) => {
+      e.preventDefault()
+      console.log('MODEL', model);
+      console.log('MODEL JSON', model.toJSON());
+      return false;
+    },
+    useBinding: true,
+    sections: [{
+      id: "sample_section",
+      title: "Sample Section",
+      rows: [{
+        fields: [{
+          id: 'btn',
+          title: 'button',
+          type: 'button',
+          onclick: () => {
+            $('#sample_section').trigger('submit');
+          }
+        }]
+      }, {
+        fields: [{
+          id: 'text1_field',
+          title: 'text',
+          bindTo: 'text1'
+        }]
+      }, {
+        grid: {
+          id: 'gridId',
+          title: 'GRID',
+          bindTo: 'gridA',
 
-  let ccAPI = '/*@echo CC.SECURE.INTER.HREF*/' + '/data/my_data_feed';
-  let customVar = '/*@echo SOME_ENV*/';
-  //See preprocessorOptions() in gulp_helper.js for available variables
-  //See https://github.com/jsoverson/preprocess#directive-syntax for more about preprocessor syntax
+          headers: [{
+            title: 'checkbox'
+          }, {
+            title: 'radio'
+          }],
+          fields: [{
+            id: 'checkbox',
+            type: 'checkbox',
+            choices: [{
+              text: 'a'
+            }, {
+              text: 'b'
+            }],
+            orientation: 'horizontal',
+            bindTo: 'checkbox'
+          }, {
+            id: 'radio',
+            type: 'radio',
+            choices: [{
+              text: 'a'
+            }, {
+              text: 'b'
+            }],
+            orientation: 'horizontal',
+            bindTo: 'radio'
+          }]
+        }
+      }, {
+        grid: {
+          id: 'gridId2',
+          title: 'GRID',
+          bindTo: 'gridB',
 
+          headers: [{
+            title: 'checkbox'
+          }, {
+            title: 'radio'
+          }],
+          fields: [{
+            id: 'checkboxs',
+            type: 'checkbox',
+            choices: [{
+              text: 'a'
+            }, {
+              text: 'b'
+            }],
+            orientation: 'horizontal',
+            bindTo: 'checkbox'
+          }, {
+            id: 'radios',
+            type: 'radio',
+            choices: [{
+              text: 'a'
+            }, {
+              text: 'b'
+            }],
+            orientation: 'horizontal',
+            bindTo: 'radio'
+          }]
+        }
+      }]
+    }]
+  };
 
-  //Your app should use this place as the starting point for running code.
-  //This file will be loaded on the WCM page near the end of the body, in your footer.html
-
-  //Some things your app might do:
-  //Maybe load in some external data with ajax
-  //Maybe insert some html into the DOM, referencing elements in body.html
-  //Maybe use some corejs features
-
-  //You should use CotModel, which extends Backbone.Model, to manage data models
-  let sampleDataObject = new CotModel({
-    text_field_name: 'Sample text field value',
-    checkbox_field_name: ['one'],
-    radio_field_name: 'two',
-    postal_code: 'H0H0H0',
-    phone: '416-392-0000',
-    url: 'http://www.som.com',
-    email: 'jkl.jkl@jkl.jkl',
-    select_field_name: 'three'
+  const form = new CotForm(formDef);
+  form.render({
+    target: $('#testgridbackbonemodel_container')
   });
-
-  //You should use CotForm to create forms. The DemoForm class is an example that
-  //uses a custom subclass of CotView, which extends Backbone.view, to manage a CotForm instance
-  let form = new DemoForm({
-    id: 'demo_form',
-    title: 'Demo Form',
-    model: sampleDataObject
-  });
-
-  if (window['cot_app']) {
-    const app = new cot_app("testgridbackbonemodel");
-
-    app.setBreadcrumb([
-      {"name": "testgridbackbonemodel", "link": "#"}
-    ]);
-
-    app.render();
-  }
-
-  form.render($('.testgridbackbonemodel_container'));
+  form.setModel(model);
 });

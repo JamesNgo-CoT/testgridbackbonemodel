@@ -56,17 +56,7 @@ It is best to avoid the use of IDs on HTML elements because
 - Embedded apps could be placed on the same page more than once.
 -->
 <!-- cot-app:body -->
-<div>Hello World from HTML</div>
-<div class="testgridbackbonemodel_container"></div>
-<img src="<!-- @echo SRC_PATH -->/img/sample.jpg" alt="" class="my-image">
-
-<p>Core uses <a href="https://www.npmjs.com/package/gulp-preprocess">gulp-preprocess</a> to allow for preprocessing:</p>
-<!-- @if ENV='local' || ENV='dev' -->
-<strong>You are building in the <!-- @echo ENV --> environment</strong>
-<!-- @endif -->
-<p>See preprocessorOptions() in gulp_helper.js for available variables</p>
-<p>See <a href="https://github.com/jsoverson/preprocess#directive-syntax">preprocess</a> for more about preprocessor syntax</p>
-
+<div id="testgridbackbonemodel_container"></div>
 <!-- cot-app:body end-->
 
 <!--
@@ -82,7 +72,6 @@ It should contain script references that this application requires.
 <!-- endinject -->
 
 <!-- place your application script references here: -->
-<script type="text/javascript" src="<!-- @echo SRC_PATH -->/scripts/demo_form.js"></script>
 <script type="text/javascript" src="<!-- @echo SRC_PATH -->/scripts/main.js"></script>
 
 <!-- endbuild -->
